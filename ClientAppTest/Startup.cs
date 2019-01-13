@@ -24,12 +24,25 @@ namespace ClientAppTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
+            services.AddAuthentication(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+                options.DefaultScheme = "cookie";
+                options.DefaultChallengeScheme = "oidc";
+            })
+              .AddCookie("cookie")
+              .AddOpenIdConnect("oidc", options =>
+              {
+                  options.Authority = "https://localhost:44304/";
+                  options.ClientId = "openIdConnectClient";
+                  options.SignInScheme = "cookie";
+              });
+
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -51,7 +64,9 @@ namespace ClientAppTest
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
