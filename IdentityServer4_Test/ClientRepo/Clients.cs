@@ -33,7 +33,7 @@ namespace IdentityServer4_Test.ClientRepo
                         "customAPI.write"
                     },
                     RedirectUris = new List<string> {"https://localhost:44304/signin-oidc"},
-                    PostLogoutRedirectUris = new List<string> {"https://localhost:44304/"}
+                    PostLogoutRedirectUris = new List<string> {"https://localhost:44304/" }
                 }
             };
         }
