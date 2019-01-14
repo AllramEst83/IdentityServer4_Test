@@ -22,7 +22,7 @@ namespace IdentityServer4_Test.Data
             {
                 scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
                 scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
-                //scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+                scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
 
                 var context = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
